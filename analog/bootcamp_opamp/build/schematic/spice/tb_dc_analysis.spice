@@ -1,0 +1,61 @@
+** sch_path: /home/dhruvs/DhruvS_Analog_Bootcamp/analog/bootcamp_opamp/schematics/tb_dc_analysis.sch
+**.subckt tb_dc_analysis
+VDD net1 GND 1.8
+VSS net2 GND -1.8
+VDIFF net3 GND 0
+R1 VOUT GND 10MEG m=1
+x1 net1 VOUT net3 GND net2 opamp_two_stage
+**** begin user architecture code
+
+.param mc_mm_switch=0
+.param mc_pr_switch=0
+.include /home/dhruvs/.volare/sky130A/libs.tech/ngspice/corners/tt.spice
+.include /home/dhruvs/.volare/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice
+.include /home/dhruvs/.volare/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice
+.include /home/dhruvs/.volare/sky130A/libs.tech/ngspice/corners/tt/specialized_cells.spice
+
+
+.option scale=1u
+.save all
+.dc VDIFF -10m 10m 10u
+.control
+  run
+  plot v(VOUT) title 'DC Transfer Curve'
+  plot deriv(v(VOUT)) title 'Voltage Gain (Av)'
+.endc
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  opamp_two_stage.sym # of pins=5
+** sym_path: /home/dhruvs/DhruvS_Analog_Bootcamp/analog/bootcamp_opamp/symbols/opamp_two_stage.sym
+** sch_path: /home/dhruvs/DhruvS_Analog_Bootcamp/analog/bootcamp_opamp/symbols/opamp_two_stage.sch
+.subckt opamp_two_stage VDD VOUT VIN_P VIN_N VSS
+*.iopin VDD
+*.iopin VSS
+*.ipin VIN_P
+*.ipin VIN_N
+*.opin VOUT
+XM1 net2 VIN_P net1 VSS sky130_fd_pr__nfet_01v8 L=1 W=30 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM2 net3 VIN_N net1 VSS sky130_fd_pr__nfet_01v8 L=1 W=30 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM3 net2 net2 VDD VDD sky130_fd_pr__pfet_01v8 L=1 W=60 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM4 net3 net2 VDD VDD sky130_fd_pr__pfet_01v8 L=1 W=60 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM5 net1 net4 VSS VSS sky130_fd_pr__nfet_01v8 L=2 W=60 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM6 VOUT net3 VDD VDD sky130_fd_pr__pfet_01v8 L=1 W=60 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM7 VOUT net4 VSS VSS sky130_fd_pr__nfet_01v8 L=2 W=30 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM_bias net4 net4 VSS VSS sky130_fd_pr__nfet_01v8 L=2 W=60 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)'
++ ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XR_ref net4 VDD VSS sky130_fd_pr__res_high_po W=0.35 L=32 mult=1 m=1
+Cc net3 net5 10p m=1
+Rz net5 VOUT 2k m=1
+.ends
+
+.GLOBAL GND
+.end

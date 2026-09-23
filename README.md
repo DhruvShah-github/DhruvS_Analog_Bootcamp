@@ -1,6 +1,18 @@
-# UWASIC Design Template
+# 2-Stage Op-Amp Performance Summary
+| Parameter | Simulated Result | Target |
+| :--- | :--- | :--- |
+| DC Gain | 90.61 dB | ≥ 20 dB |
+| Input Offset | -0.0047 mV | ≤ 5 mV |
+| CMRR | 94.53 dB | ≥ 40 dB |
+| Input Impedance | 2.52e+06 MΩ (2.52 TΩ) | ≥ 1 MΩ |
+| Output Impedance | 0.010 kΩ (10.00 Ω) | ≤ 1 kΩ |
+| Power Consumption | 0.83 mW | ≤ 5 mW |
+| 3dB Bandwidth | 0.00034 MHz (340.2 Hz) |
+| GBW Product | 11.98 MHz |
+| Phase Margin | 90.52° | ≥ 45° |
 
-A template for mixed-signal ASIC design using open-source tools, featuring automated workflows for digital, analog, and integration for TinyTapeout chip projects.
+**PASS/FAIL: PASS**
+
 
 ## Documentation
 
